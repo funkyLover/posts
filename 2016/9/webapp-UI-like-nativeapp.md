@@ -85,7 +85,22 @@ ok,从这个要求重新出发,改写如下
 </style>
 ```
 
-做法就是把input设成透明然后覆盖到button的区域上,这种做法暂且还没有出现什么问题
+做法就是把input设成透明然后覆盖到button的区域上,这种做法~~暂且还没有出现什么问题~~在oppo手机上出现问题了,还不清楚是其安卓版本导致还是oppo的ROM的问题
+
+不过又改了一下,顺利能在oppo上使用
+
+```css
+.avatar-wrapper .avatar-input {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* opacity: 0; */
+  clip: rect(0 0 0 0);
+}
+
+```
 
 ### 限定文件类型
 
