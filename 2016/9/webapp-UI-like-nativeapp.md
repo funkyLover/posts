@@ -3,7 +3,7 @@
 
 原生应用在获得系统接口的权限下,可以做出体验非常好的各种交互流程,而一般而言适配了移动设配的的`web app`(并不是指`hybrid app`或是用react-native或是weex搭建的`native app`)要达到原生的交互效果往往需要做更多的工作.
 
-而现在的确可以说是微信的元年,公众号火自然不用说,之后的应用号出来相信web app的需求肯定会越来越多.恰好自己最近踩了一些坑特来记录,这篇权当是开篇,有可能会越写越多.
+~~而现在的确可以说是微信的元年,公众号火自然不用说,之后的应用号出来相信web app的需求肯定会越来越多.恰好自己最近踩了一些坑特来记录,这篇权当是开篇,有可能会越写越多.~~ 应用号的形式并不是webapp
 
 最近有需求在web app上做一个在原生应用非常常见的功能`选择头像`.
 
@@ -56,7 +56,7 @@ ok,从这个要求重新出发,改写如下
 ```html
 <div class="avatar-wrapper">
   <button id="avatarBtn" class="avatar-btn">
-    <img src="placeholdImage" alt="请选择图片">
+    <img src="placeholdImage" alt="请选择图片" id="avatarImg">
   </button>
   <input type="file" id="avatarInput" class="avatar-input">
 </div>
@@ -122,9 +122,16 @@ ok,从这个要求重新出发,改写如下
 ```js
 // html还是上面的部分
 // 选择文件完成后,使用file api把文件提取出来,再使用FileReader即可
+// 考虑兼容性问题,可以先上传到服务器然后显示返回的url,但是有个缺点就是
+// 上传完照片后却没有进行下一步操作,这样会浪费后台资源
 function previewImage (file) {
-  // 未完待续
+  // 代码类似
+  var reader = new FileReader()
+  reader.onload = function (e) {
+    $('#avatarImg').attr('src', e.target.result)
+  }
+  reader.readAsDataURL(file)
 }
 ```
 
-
+到此为止算是基本完成这个流程
